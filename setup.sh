@@ -7,11 +7,16 @@ function updateYum(){
     yum -y update
 }
 
-function checkGit(){
+function checkCommand(){
     if type git >/dev/null 2>&1; then 
         return 0 
     else 
         yum install git 
+    fi
+    if type vim >/dev/null 2>&1; then 
+        return 0 
+    else 
+        yum install vim 
     fi
 }
 
@@ -40,7 +45,7 @@ function install(){
 
 function main(){
     updateYum
-    checkGit
+    checkCommand
     init
 }
 
