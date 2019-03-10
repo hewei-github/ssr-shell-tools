@@ -26,8 +26,10 @@ function randstr() {
 }
 
 function init(){
-    mkdir /data && cd /data && git clone https://github.com/hewei-github/ssr-shell-tools.git
-    cd /data/ssr-shell-tools
+    if [ ! -d "/data/" ];then
+        mkdir /data && cd /data && git clone https://github.com/hewei-github/ssr-shell-tools.git
+        cd /data/ssr-shell-tools
+    fi    
     echo `randstr` > /data/.password
 }
 
