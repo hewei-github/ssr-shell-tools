@@ -9,12 +9,12 @@ function updateYum(){
 
 function checkCommand(){
     if type git >/dev/null 2>&1; then 
-        return 0 
+        echo "git exists"
     else 
         yum install git 
     fi
     if type vim >/dev/null 2>&1; then 
-        return 0 
+        echo "vim exists"
     else 
         yum install vim 
     fi
@@ -36,9 +36,11 @@ function init(){
         cd /data/ssr-shell-tools
     fi    
     echo `randstr` > /data/.password
+    echo "init ok"
 }
 
 function install(){
+    echo "start install ..."
     /data/ssr-shell-tools/ss-fly.sh -i $(`cat /data/.password`) ${port}
     /data/ssr-shell-tools/ss-fly.sh -bbr
 }
@@ -47,6 +49,7 @@ function main(){
     updateYum
     checkCommand
     init
+    install
 }
 
 main
