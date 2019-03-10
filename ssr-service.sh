@@ -26,20 +26,25 @@ function help(){
 
 # 主功能
 function main() {
-    case $1 in 
-     start)
-        start
-     ;;
-     stop)
-        stop
-     ;;
-     restart)
-        restart
-     ;;
-     *)
-       help
-     ;;
-     esac
+    if type ssserver > /dev/null 2>&1 ;then
+         case $1 in 
+              start)
+                 start
+              ;;
+              stop)
+                 stop
+              ;;
+              restart)
+                 restart
+              ;;
+              *)
+                help
+              ;;
+              esac
+   else 
+         echo "ssr service not installed"
+         echo "please install ssr , you can run setup.sh to auto install"
+   fi 
 }
 
 main ${*}

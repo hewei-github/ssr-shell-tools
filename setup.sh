@@ -11,12 +11,12 @@ function checkCommand(){
     if type git >/dev/null 2>&1; then 
         echo "git exists"
     else 
-        yum install git 
+        yum install -y git 
     fi
     if type vim >/dev/null 2>&1; then 
         echo "vim exists"
     else 
-        yum install vim 
+        yum install -y vim 
     fi
 }
 
@@ -32,7 +32,8 @@ function randstr() {
 
 function init(){
     if [ ! -d "/data/" ];then
-        mkdir /data && cd /data && git clone https://github.com/hewei-github/ssr-shell-tools.git
+        mkdir /data && chmod 755 /data 
+        cd /data && git clone https://github.com/hewei-github/ssr-shell-tools.git
         cd /data/ssr-shell-tools
     fi    
     echo `randstr` > /data/.password
@@ -40,9 +41,15 @@ function init(){
 }
 
 function install(){
-    echo "start install ..."
-    /data/ssr-shell-tools/ss-fly.sh -i $(`cat /data/.password`) ${port}
-    /data/ssr-shell-tools/ss-fly.sh -bbr
+    
+    if type ssserver > /dev/null 2>&1 ; then
+        echo "ssr  installed"
+    else
+        echo "start install ..." 
+        pwd=`cat /data/.password`
+        /data/ssr-shell-tools/ss-fly.sh -i ${pwd} ${port}
+        /data/ssr-shell-tools/ss-fly.sh -bbr
+    fi
 }
 
 function main(){
